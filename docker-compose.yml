@@ -1,0 +1,34 @@
+version: "3.7"
+
+services:
+  item-app:
+    # Image from docker hub
+    # image: elvirareza/item-app:v1
+
+    # Image from github package
+    image: ghcr.io/pjwoolf/item-app:v1
+    
+    # Run item-app after item-db
+    depends_on:
+      - item-db
+    
+    # Port mapping on port 80
+    ports:
+      - 80:8080
+
+    # Restart policy
+    restart: "always"
+
+  item-db:
+    # Image for database
+    image: mongo:3
+
+    # Volume
+    volumes:
+      - app-db:/data/db
+    
+    # Restart policy
+    restart: "always"
+
+volumes:
+  app-db:

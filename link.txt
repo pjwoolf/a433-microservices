@@ -1,0 +1,2 @@
+Link dockerhub: https://hub.docker.com/r/elvirareza/item-app
+Link github packages: https://github.com/pjwoolf/a433-microservices/pkgs/container/item-app
