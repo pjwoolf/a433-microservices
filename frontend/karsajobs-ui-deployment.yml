@@ -1,0 +1,22 @@
+apiVersion: apps/v1 # Deployment for frontend
+kind: Deployment
+metadata:
+  name: karsajobs-ui
+  labels:
+    app: karsajobs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: karsajobs
+  template:
+    metadata:
+      labels:
+        app: karsajobs
+    spec:
+      containers:
+        - name: karsajobs
+          image: ghcr.io/pjwoolf/karsajobs-ui:latest
+          ports:
+            - containerPort: 8000
+

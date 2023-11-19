@@ -1,0 +1,28 @@
+apiVersion: v1 # Persistent volume for mongo
+kind: PersistentVolume
+metadata:
+  name: mongo-pv
+  labels:
+    app: mongodb
+spec: # Persistent volume specifications
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /data/db
+---
+apiVersion: v1 # Persistent volume claim for mongo
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+  labels:
+    app: mongodb
+spec: # Persistent volume claim specifications
+    storageClassName: manual
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi

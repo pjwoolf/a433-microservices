@@ -1,0 +1,13 @@
+apiVersion: v1 # Service for backend
+kind: Service
+metadata:
+  name: karsajobs-backend
+  labels:
+    app: karsajobs
+spec: # Service specifications
+  ports:
+  - port: 8080
+    nodePort: 30007
+  selector:
+    app: karsajobs
+  type: NodePort

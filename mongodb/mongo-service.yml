@@ -1,0 +1,12 @@
+apiVersion: v1 # Service for mongo
+kind: Service
+metadata:
+  name: mongodb
+  labels:
+    app: karsajobs
+spec: # Service specification
+  selector:
+    app: karsajobs
+  ports:
+    - port: 27017
+  clusterIP: None
