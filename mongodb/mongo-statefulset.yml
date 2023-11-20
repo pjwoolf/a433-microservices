@@ -36,13 +36,13 @@ spec: # Stateful set specifications
       volumes:
         - name: mongodb-persistent-storage
           persistentVolumeClaim:
-            claimName: mongodb-pvc
+            claimName: mongo-pvc
         - name: mongodb-config
           configMap:
-            name: mongodb-config
+            name: mongo-config
             items:
               - key: mongo.conf
                 path: mongo.conf
         - name: mongodb-secret
           secret:
-            secretName: mongodb-secret
+            secretName: mongo-secret

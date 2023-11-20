@@ -1,0 +1,46 @@
+version: "3.7"
+
+services: # Services
+  rabbitmq: # RabbitMQ service
+    image: rabbitmq:3.8-management-alpine
+    container_name: 'rabbitmq_container'
+    ports:
+        - 5673:5672
+        - 15673:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - rabbitmq_network
+  order: # Order service
+    image: ghcr.io/pjwoolf/order-service:latest
+    container_name: 'order_service'
+    ports:
+      - 3000:3000
+    working_dir: /src
+    depends_on: # Run after rabbitmq service
+      - "rabbitmq"
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'
+    environment:
+      NODE_ENV: production
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+    networks:
+      - rabbitmq_network
+  shipping: # Shipping service
+    image: ghcr.io/pjwoolf/shipping-service:latest
+    container_name: 'shipping_service'
+    ports:
+      - 3001:3001
+    working_dir: /src
+    depends_on: # Run after rabbitmq service
+      - "rabbitmq"
+    command: sh -c '/bin/wait-for-it.sh rabbitmq:5672 --timeout=30 -- node index.js'
+    environment:
+      NODE_ENV: production
+      AMQP_URL: amqp://guest:guest@rabbitmq:5672
+    networks:
+      - rabbitmq_network
+
+networks: # Networks
+  rabbitmq_network:
+    driver: bridge
