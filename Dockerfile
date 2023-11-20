@@ -16,4 +16,5 @@ RUN chmod +x /bin/wait-for-it.sh
 ENV NODE_ENV=development
 RUN npm install
 COPY ./*.js ./
+EXPOSE 3001
 CMD ["node", "index.js"]
