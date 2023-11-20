@@ -2,7 +2,7 @@ FROM node:18-alpine as base
 WORKDIR /src
 COPY package*.json ./
  
-FROM base as production
+FROM base as production 
 ENV NODE_ENV=production
 RUN npm ci
 COPY ./*.js ./
